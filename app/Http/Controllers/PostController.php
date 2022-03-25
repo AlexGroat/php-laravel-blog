@@ -11,28 +11,24 @@ class PostController extends Controller
 {
     public function index()
     {
-        // search post by latest
-        $posts = Post::latest();
-        // if request is of name search, refer _post-header.blade.php line 71
-        if (request('search')) {
-            // find a post by the title or a word somewhere in the body
-            $posts->where('title', 'like', '%' . request('search') . '%')
-                ->orwhere('body', 'like', '%' . request('search') . '%');
-        }
-
         return view('posts', [
             // pass it to the view
             // passes throught with the selected categories
-            // sort accordingly to latest post published
-            'posts' => $posts->get(),
+            // sort accordingly to latest post published and the input of the search bar 
+            'posts' => Post::latest()->filter(request(['search']))->get(),
             'categories' => Category::all()
         ]);
     }
 
-    public function show()
+    public function show(Post $post)
     {
+        return view('post', [
+            'post' => $post,
+            'categories' => Category::all()
+
+        ]);
     }
 }
 
 
-// model, controller, routes renders view
+// eloquent model, controller, routes renders view

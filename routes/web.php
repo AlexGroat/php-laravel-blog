@@ -35,13 +35,7 @@ Route::get('/', [PostController::class, 'index']);
 // ROUTE MODEL BINDING
 // binding route key to an underlying eloquent model
 // wildcard name and slug must match with variable name and slug
-Route::get('posts/{post:slug}', function (Post $post) {
-    return view('post', [
-        'post' => $post,
-        'categories' => Category::all()
-        
-    ]);
-});
+Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [

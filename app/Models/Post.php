@@ -15,7 +15,7 @@ class Post extends Model
 
     protected $guarded = [];
 
-    
+
     // Eager loading: you do everything when asked. Classic example is when you multiply two matrices. 
     // You do all the calculations. That's eager loading;
     // Lazy loading: you only do a calculation when required. In the previous example, you don't do 
@@ -24,6 +24,17 @@ class Post extends Model
     // eager loading by default for every post query
 
     protected $with = ['category', 'author'];
+
+    // query scope
+    public function scopeFilter($query, array $filters)
+    {
+        // if request is of name search, refer _post-header.blade.php line 71
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            // find a post by the title or a word somewhere in the body
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orwhere('body', 'like', '%' . $search . '%');
+        });
+    }
 
     public function category()
     {
@@ -35,6 +46,5 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
-    
     }
 }
