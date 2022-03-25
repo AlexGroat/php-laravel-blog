@@ -13,7 +13,7 @@ class PostController extends Controller
     {
         // search post by latest
         $posts = Post::latest();
-        // if request is of name search, refer _post-header.blade.php line 68
+        // if request is of name search, refer _post-header.blade.php line 71
         if (request('search')) {
             // find a post by the title or a word somewhere in the body
             $posts->where('title', 'like', '%' . request('search') . '%')
