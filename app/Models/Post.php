@@ -34,6 +34,13 @@ class Post extends Model
             $query->where('title', 'like', '%' . $search . '%')
                 ->orwhere('body', 'like', '%' . $search . '%');
         });
+
+        $query->when($filters['category'] ?? false, function ($query, $category) {
+            // give me the posts where they have a category
+            $query->whereHas('category', fn($query) => 
+            // specifically where the category slug matches the user request
+            $query->where('slug', $category));
+        });
     }
 
     public function category()

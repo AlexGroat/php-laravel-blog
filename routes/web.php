@@ -37,14 +37,14 @@ Route::get('/', [PostController::class, 'index']);
 // wildcard name and slug must match with variable name and slug
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('categories/{category:slug}', function (Category $category) {
-    return view('posts', [
-        'posts' => $category->posts,
-        // key value pair with category
-        'currentCategory' => $category,
-        'categories' => Category::all()
-    ]);
-});
+// Route::get('categories/{category:slug}', function (Category $category) {
+//     return view('posts', [
+//         'posts' => $category->posts,
+//         // key value pair with category
+//         'currentCategory' => $category,
+//         'categories' => Category::all()
+//     ]);
+// });
 
 Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
