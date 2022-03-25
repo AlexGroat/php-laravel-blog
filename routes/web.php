@@ -26,5 +26,3 @@ Route::get('/', [PostController::class, 'index']);
 // binding route key to an underlying eloquent model
 // wildcard name and slug must match with variable name and slug
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
-
-
