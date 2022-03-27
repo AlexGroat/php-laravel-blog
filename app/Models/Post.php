@@ -28,26 +28,29 @@ class Post extends Model
     // query scope
     public function scopeFilter($query, array $filters)
     {
-        // if request is of name search, refer _post-header.blade.php line 71
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            // find a post by the title or a word somewhere in the body
-            $query->where('title', 'like', '%' . $search . '%')
-                ->orwhere('body', 'like', '%' . $search . '%');
-        });
+        // if request is of name search, refer _post-header.blade.php line 71'       
+        $query->when(
+            $filters['search'] ?? false,
+            fn ($query, $search) =>
+            $query->where(
+                fn ($query) =>
+                // find a post by the title or a word somewhere in the body
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('body', 'like', '%' . $search . '%')
+            )
+        );
 
-        $query->when($filters['category'] ?? false, function ($query, $category) {
-            // give me the posts where they have a category
-            $query->whereHas('category', fn($query) => 
-            // specifically where the category slug matches the user request
-            $query->where('slug', $category));
-        });
+        $query->when($filters['category'] ?? false, fn ($query, $category) =>
+        // give me the posts where they have a category
+        $query->whereHas('category', fn ($query) =>
+        // specifically where the category slug matches the user request
+        $query->where('slug', $category)));
 
-        $query->when($filters['author'] ?? false, function ($query, $author) {
-            // give me the posts where they have a category
-            $query->whereHas('author', fn($query) => 
-            // specifically where the category slug matches the user request
-            $query->where('username', $author));
-        });
+        $query->when($filters['author'] ?? false, fn ($query, $author) =>
+        // query the post author
+            $query->whereHas('author', fn ($query) =>
+            // give me all the posts by the requested post author
+                $query->where('username', $author)));
     }
 
     public function category()
