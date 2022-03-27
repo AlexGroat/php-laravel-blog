@@ -23,7 +23,10 @@
                     All</a>
 
                 @foreach ($categories as $category)
-                <a href="/?category={{ $category->slug }}" class="block text-left ml-3 text-sm leading-6 hover:bg-blue-300 
+                <!-- http_build_query accepts and array and converts it to a query string -->
+                <!-- get an array of the request data, EXCEPT THE CATEGORY, convert it to a query string and append to the href  -->
+                <a href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category')) }} "
+                 class="block text-left ml-3 text-sm leading-6 hover:bg-blue-300 
                     focus:bg-blue-300 hover:text-white focus:text-white
                     {{ isset($currentCategory) && $currentCategory->is($category) ? 'bg-blue-500 text-white' : '' }}
                     ">
