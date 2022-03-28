@@ -14,7 +14,11 @@
 
                     </label>
 
-                    <input class="border border-gray-400 p-2 w-full" type="text" name="name" id="name" required>
+                    <input class="border border-gray-400 p-2 w-full" type="text" name="name" id="name" value="{{ old('name') }}" required>
+
+                    @error('name')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
                     <div class="mb-4 mt-4">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="username">
 
@@ -22,7 +26,11 @@
 
                         </label>
 
-                        <input class="border border-gray-400 p-2 w-full" type="text" name="username" id="username" required>
+                        <input class="border border-gray-400 p-2 w-full" type="text" name="username" id="username" value="{{ old('username') }}" required>
+
+                        @error('username')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="mb-4 mt-4">
                             <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="email">
 
@@ -30,7 +38,13 @@
 
                             </label>
 
-                            <input class="border border-gray-400 p-2 w-full" type="text" name="email" id="email" required>
+                            <!-- default value: Sometimes you may wish to store items in the session for the next request. 
+                             You may do so using the flash method. Data stored in the session using this method will be 
+                             available immediately and during the subsequent HTTP request -->
+                            <input class="border border-gray-400 p-2 w-full" type="text" name="email" id="email" value="{{ old('email') }}" required>
+                            @error('email')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            @enderror
                             <div class="mb-4 mt-4">
                                 <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="password">
 
@@ -39,10 +53,11 @@
                                 </label>
 
                                 <input class="border border-gray-400 p-2 w-full" type="password" name="password" id="password" required>
-
-                                @error('username')
+                                @error('password')
                                 <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                                 @enderror
+
+
                             </div>
 
                             <div class="mb-6">
@@ -51,6 +66,14 @@
                                     Submit</button>
                             </div>
 
+                            <!-- another way to append the errors at the bottom of the form -->
+                            <!-- @if ($errors->any())
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li class="text-red-500 text-s">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            @endif -->
             </form>
         </main>
     </section>
