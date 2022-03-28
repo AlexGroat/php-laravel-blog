@@ -3,6 +3,7 @@
 // illuminate is the namespace laravel choose to put their code in
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,9 @@ Route::get('/', [PostController::class, 'index']);
 // wildcard name and slug must match with variable name and slug
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('register', [RegisterController::class, 'create']);
+Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 // create user with create blade using the store function in the register
 // controller
-Route::post('register', [RegisterController::class, 'store']);
+Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
+
+Route::post('logout', [SessionsController::class, 'destroy']);
