@@ -17,8 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    // include these fields in the register user
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
