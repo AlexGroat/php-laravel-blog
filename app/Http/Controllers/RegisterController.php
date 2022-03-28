@@ -23,7 +23,7 @@ class RegisterController extends Controller
         $attributes = request()->validate([
             'name' => ['required', 'max:255'],
             // unique in the users table inside the username column
-            'username' => ['required', 'min:3', 'max:255' ,'unique:users,username'],
+            'username' => ['required', 'min:3', 'max:255', 'unique:users,username'],
             // unique email in the users table inside the email column
             'email' => ['required', 'email',  'max:255', 'unique:users,email'],
             'password' => ['required', 'min:7', 'max:255'],
@@ -35,6 +35,7 @@ class RegisterController extends Controller
         // CREATE VALIDATED USER
         User::create($attributes);
 
-        return redirect('/');
+        // displays only in the next page request
+        return redirect('/')->with('success', 'Your account has been created.');
     }
 }
