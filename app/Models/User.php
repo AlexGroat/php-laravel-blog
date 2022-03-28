@@ -44,6 +44,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // accessor
+    public function getUsernameAttirbute($username)
+    {
+       return ucwords($username); // echo on page, will return username with
+       // capital letter 
+    }
+
+    // mutator
+    public function setPasswordAttribute($password)
+    {
+        // mutator, // refer register controller line 23
+        $this->attributes['password'] = bcrypt($password);    
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);

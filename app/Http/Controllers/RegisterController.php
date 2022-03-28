@@ -20,15 +20,18 @@ class RegisterController extends Controller
         // laravel takes the existing attributes in the request and
         // validate them
         // VALIDATE USER
-        $userattributes = request()->validate([
+        $attributes = request()->validate([
             'name' => ['required', 'max:255'],
             'username' => ['required', 'max:255'],
             'email' => ['required', 'email',  'max:255'],
             'password' => ['required', 'min:7', 'max:255'],
         ]);
 
+        // one way to encrypt the users password on creation
+        // $attributes['password'] = bcrypt($attributes['password']);
+
         // CREATE VALIDATED USER
-        User::create($userattributes);
+        User::create($attributes);
 
         return redirect('/');
     }
