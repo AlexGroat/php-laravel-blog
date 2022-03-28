@@ -20,22 +20,24 @@ class SessionsController extends Controller
         ]);
 
         if (auth()->attempt($attributes)) {
-            // regenerate users session to protect against session fixation
-            session()->regenerate();
 
-            return redirect('/')->with('success', 'Welcome Back!');
+            // return back()
+            //     ->withInput()
+            //     ->withErrors([
+            //         'email' => 'Your provided credentials could not be verified.'
+            //     ]);
+
+
+            // short version of lines 24-28
+            throw ValidationException::withMessages([
+                'email' => 'Your provided credentials could not be verified.'
+            ]);
         }
 
-        // return back()
-        //     ->withInput()
-        //     ->withErrors([
-        //         'email' => 'Your provided credentials could not be verified.'
-        //     ]);
+        // regenerate users session to protect against session fixation
+        session()->regenerate();
 
-        // short version of lines 26-30
-        throw ValidationException::withMessages([
-            'email' => 'Your provided credentials could not be verified.'
-        ]);
+        return redirect('/')->with('success', 'Welcome Back!');
     }
 
     public function destroy()

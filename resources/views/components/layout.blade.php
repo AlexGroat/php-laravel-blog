@@ -16,7 +16,7 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
-                @if(!auth()->check())
+                @if(!auth()->check()) 
                 <a href="/register" class="text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="text-xs font-bold uppercase px-3">Log In</a>
                 @else 
