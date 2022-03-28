@@ -32,3 +32,5 @@ class PostController extends Controller
 
 
 // eloquent model, controller, routes renders view
+
+// 7 restful actions: index, show, create, store, edit, update, destroy
