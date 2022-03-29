@@ -38,3 +38,5 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 
 // POST CONTROLLER CLASS 'CREATE' IS A REFERENCE TO METHOD INSIDE POSTCONTROLLER!!!!!
 Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
+
+Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');

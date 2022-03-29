@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -31,8 +32,29 @@ class PostController extends Controller
 
     public function create()
     {
+
+
         return view('posts.create');
-    
+    }
+
+    public function store()
+    {
+        $attributes = request()->validate([
+            'title' => 'required',
+            // this slug should be unique
+            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'excerpt' => 'required',
+            'body' => 'required',
+            // this ID should exist on the categories table, specifically the id column
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
+
+        // append the user id to the attributes afterward
+        $attributes['user_id'] = auth()->id();
+
+        Post::create($attributes);
+
+        return redirect('/');
     }
 }
 
