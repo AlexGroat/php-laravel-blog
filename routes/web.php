@@ -9,6 +9,25 @@ use App\Http\Controllers\PostCommentsController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('ping', function () {
+
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us14'
+    ]);
+
+    $response = $mailchimp->lists->addListMember('1f2d7fdf0b', [
+        'email_address' => 'alex.groat.95@gmail.com',
+        'status' => 'subscribed'
+    ]);
+
+    dd($response);
+
+    // print_r($response);
+});
+
 // path to a controller and the name of the controller action
 Route::get('/', [PostController::class, 'index']);
 
