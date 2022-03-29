@@ -28,7 +28,14 @@
                 <a href="/login" class="text-xs font-bold uppercase px-3">Log In</a>
                 @else
                 <!-- if logged in, present this welcome message to the authenticated user -->
-                <span class="text-xs font-bold uppercase">Welcome Back, {{ auth()->user()->username }}!</span>
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <button class="text-xs font-bold uppercase">Welcome Back, {{ auth()->user()->username }}!</button>
+                    </x-slot>
+                    <li class="hover:text-blue-500"><a href="/">Dashboard</a></li>
+                    <li class="hover:text-blue-500"><a href="/admin/posts/create">New Post</a></li>
+
+                </x-dropdown>
 
                 <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
                     @csrf

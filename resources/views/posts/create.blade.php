@@ -1,10 +1,8 @@
 <x-layout>
 
-    <section class="my-5 px-5 py-7 border border-gray-200 p-6 rounded-xl max-w-sm mx-auto">
+    <x-setting>
         <form method="POST" action="/admin/posts" enctype="multipart/form-data">
             @csrf
-
-            <h1 class="flex justify-center text-2xl text-blue-500">Publish your post here!</h1>
 
             <!-- going into the form directory, then the input file -->
             <x-form.input name="title" />
@@ -31,5 +29,7 @@
             </div>
 
         </form>
-    </section>
+    </x-setting>
+
+
 </x-layout>

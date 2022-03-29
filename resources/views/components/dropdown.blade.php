@@ -1,7 +1,7 @@
 @props(['trigger'])
 <!-- x-data available thru alpine js plugin in the post-header.blade  -->
 <!--  click away from dropwdown and it will close -->
-<div x-data="{show: false}" @click.away="show = false">
+<div x-data="{show: false}" @click.away="show = false" class="relative">
    
    <div @click="show = ! show"> 
     {{ $trigger }}
