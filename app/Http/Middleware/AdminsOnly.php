@@ -18,7 +18,7 @@ class AdminsOnly
     public function handle(Request $request, Closure $next)
     {
         
-        abort_if(auth()->user()?->username !== 'Pete', Response::HTTP_FORBIDDEN);
+        abort_if(auth()->user()?->username !== 'jonny', Response::HTTP_FORBIDDEN);
 
         return $next($request);
     }
