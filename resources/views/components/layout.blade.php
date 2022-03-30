@@ -34,6 +34,7 @@
                     </x-slot>
                     <li class="hover:text-blue-500"><a href="/">Dashboard</a></li>
                     <li class="hover:text-blue-500"><a href="/admin/posts/create">New Post</a></li>
+                    <li class="hover:text-blue-500"><a href="/admin/posts">My Posts</a></li>
 
                 </x-dropdown>
 
