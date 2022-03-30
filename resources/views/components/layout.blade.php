@@ -30,7 +30,7 @@
                 <!-- if logged in, present this welcome message to the authenticated user -->
                 <x-dropdown>
                     <x-slot name="trigger">
-                        <button class="text-xs font-bold uppercase">Welcome Back!!, {{ auth()->user()->username }}!</button>
+                        <button class="text-xs font-bold uppercase">Welcome Back!!!, {{ auth()->user()->username }}!</button>
                     </x-slot>
                     @can('admin')
                     <li class="hover:text-blue-500"><a href="/">Dashboard</a></li>
