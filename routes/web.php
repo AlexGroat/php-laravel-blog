@@ -37,10 +37,17 @@ Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store
 // must be authenticated to reach this endpoint
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
-// POST CONTROLLER CLASS 'CREATE' IS A REFERENCE TO METHOD INSIDE POSTCONTROLLER!!!!!
-Route::get('admin/posts/create', [AdminPostController::class, 'create'])->middleware('admin');
-Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('admin');
-Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admin');
-Route::patch('admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('admin');
-Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('admin');
-Route::post('admin/posts/', [AdminPostController::class, 'store'])->middleware('admin');
+// SECOND ARG IN ROUTE ARRAY IS REFERENCE TO METHOD INSIDE CONTROLLER!!!!!
+// can admin, route middleware located in the kernel.php file
+// group admin routes
+Route::middleware('can:admit')->group(function () {
+    Route::resource('admin/posts', AdminPostController::class);
+    Route::get('admin/posts/create', [AdminPostController::class, 'create']);
+    Route::get('admin/posts', [AdminPostController::class, 'index']);
+    Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
+    Route::patch('admin/posts/{post}', [AdminPostController::class, 'update']);
+    Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']);
+    Route::post('admin/posts/', [AdminPostController::class, 'store']);
+});
+
+// 7 resourceful controllers: index, create, edit, destroy, show, store, update

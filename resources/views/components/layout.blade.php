@@ -32,10 +32,11 @@
                     <x-slot name="trigger">
                         <button class="text-xs font-bold uppercase">Welcome Back, {{ auth()->user()->username }}!</button>
                     </x-slot>
+                    @can('admin')
                     <li class="hover:text-blue-500"><a href="/">Dashboard</a></li>
                     <li class="hover:text-blue-500"><a href="/admin/posts/create">New Post</a></li>
                     <li class="hover:text-blue-500"><a href="/admin/posts">My Posts</a></li>
-
+                    @endcan
                 </x-dropdown>
 
                 <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">

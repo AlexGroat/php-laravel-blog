@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Support\Facades\Gate;
 
 use Illuminate\Http\Request;
 
@@ -12,10 +13,13 @@ class PostController extends Controller
 {
     public function index()
     {
+        // // only admins can access this page
+        // $this->authorize('admin');
+
         return view('posts.index', [
             // pass it to the view
             // passes throught with the selected categories
-            // sort accordingly to latest post published and the input of the search bar 
+            // sort accordingly to latest post published and the input of the search bar
             // with query string, adds all current query string values to the paginator
             'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6)->withQueryString()
 
@@ -29,8 +33,6 @@ class PostController extends Controller
 
         ]);
     }
-
-   
 }
 
 
