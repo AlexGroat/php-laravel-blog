@@ -21,19 +21,10 @@ class AdminPostController extends Controller
 
         return view('admin.posts.create');
     }
-
+ 
     public function store()
     {
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'required|image',
-            // this slug should be unique
-            'slug' => ['required', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required',
-            'body' => 'required',
-            // this ID should exist on the categories table, specifically the id column
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
+        $attributes = $this->validatePost();
 
         // append the user id to the attributes afterward
         $attributes['user_id'] = auth()->id();
@@ -51,20 +42,10 @@ class AdminPostController extends Controller
 
     public function update(Post $post)
     {
-
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'required|image',
-            // this slug should be unique
-            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
-            'excerpt' => 'required',
-            'body' => 'required',
-            // this ID should exist on the categories table, specifically the id column
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
+        $attributes = $this->validatePost($post);
 
         // if thumbnail is updated, store it
-        if (isset($attributes['thumbnail'])) {
+        if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         }
         $post->update($attributes);
@@ -77,5 +58,22 @@ class AdminPostController extends Controller
         $post->delete();
 
         return back()->with('success', 'Post Deleted!');
+    }
+
+    protected function validatePost(?Post $post = null)
+    {
+        $post ??= new Post();
+
+        return request()->validate([
+            'title' => 'required',
+            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            // this slug should be unique
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+            'excerpt' => 'required',
+            'body' => 'required',
+            // this ID should exist on the categories table, specifically the id column
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'published_at' => 'required'
+        ]);
     }
 }
